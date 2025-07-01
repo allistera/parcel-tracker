@@ -3,6 +3,21 @@ name: Deploy Preview
 on:
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy preview from'
+        required: true
+        default: 'main'
+        type: string
+      environment:
+        description: 'Preview environment'
+        required: false
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - staging
 
 jobs:
   deploy-preview:

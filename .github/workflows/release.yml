@@ -4,6 +4,22 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        default: false
+        type: boolean
+      draft:
+        description: 'Create as draft release'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   release:
@@ -41,8 +57,10 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: parcel-tracker-dist.zip
-        draft: false
-        prerelease: false
+        tag_name: ${{ github.event.inputs.version || github.ref }}
+        name: Release ${{ github.event.inputs.version || github.ref }}
+        draft: ${{ github.event.inputs.draft || false }}
+        prerelease: ${{ github.event.inputs.prerelease || false }}
         generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
