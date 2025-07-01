@@ -1,0 +1,41 @@
+{
+  "name": "parcel-tracker",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A Vue.js parcel tracking application with Flowbite styling",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest --coverage",
+    "lint": "eslint . --ext .vue,.js,.jsx,.ts,.tsx --fix",
+    "lint:check": "eslint . --ext .vue,.js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5",
+    "flowbite": "^2.2.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.0.0",
+    "eslint": "^8.57.0",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-vue": "^9.20.1",
+    "prettier": "^3.2.5",
+    "vitest": "^1.2.0",
+    "@vue/test-utils": "^2.4.4",
+    "jsdom": "^24.0.0",
+    "@vitest/coverage-v8": "^1.2.0",
+    "@vitest/ui": "^1.2.0"
+  },
+  "keywords": ["vue", "parcel-tracking", "flowbite", "tailwind"],
+  "author": "",
+  "license": "MIT"
+}
