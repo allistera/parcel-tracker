@@ -31,22 +31,18 @@ jobs:
     - name: Build project
       run: npm run build
 
+    - name: Create distribution archive
+      run: |
+        cd dist
+        zip -r ../parcel-tracker-dist.zip .
+        cd ..
+
     - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        files: parcel-tracker-dist.zip
         draft: false
         prerelease: false
-
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
+        generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist
-        asset_name: parcel-tracker-dist.zip
-        asset_content_type: application/zip
