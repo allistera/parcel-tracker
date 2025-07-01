@@ -5,6 +5,14 @@ module.exports = {
     browser: true,
     es2022: true
   },
+  globals: {
+    vi: 'readonly',
+    describe: 'readonly',
+    it: 'readonly',
+    expect: 'readonly',
+    beforeEach: 'readonly',
+    afterEach: 'readonly'
+  },
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-essential',

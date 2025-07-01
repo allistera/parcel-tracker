@@ -43,7 +43,7 @@ describe('TrackingInput', () => {
   it('updates tracking number when user types', async () => {
     const input = wrapper.find('input')
     await input.setValue('ABC123')
-    
+
     expect(wrapper.vm.trackingNumber).toBe('ABC123')
     expect(input.element.value).toBe('ABC123')
   })
@@ -110,7 +110,7 @@ describe('TrackingInput', () => {
   it('shows error message when error occurs', async () => {
     // Mock console.error to avoid error output in tests
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    
+
     // Override the submitTracking method to throw an error
     wrapper.vm.submitTracking = vi.fn().mockImplementation(async () => {
       wrapper.vm.loading = true
@@ -132,7 +132,7 @@ describe('TrackingInput', () => {
 
     expect(wrapper.vm.error).toBe('Failed to track package. Please try again.')
     expect(wrapper.find('.text-red-800').text()).toBe('Failed to track package. Please try again.')
-    
+
     consoleSpy.mockRestore()
   })
 

@@ -68,7 +68,7 @@ describe('ParcelTimeline', () => {
 
   it('displays timeline item details correctly', () => {
     const firstItem = mockTrackingData.timeline[0]
-    
+
     expect(wrapper.text()).toContain(firstItem.status)
     expect(wrapper.text()).toContain(firstItem.description)
     expect(wrapper.text()).toContain(firstItem.location)
@@ -99,10 +99,13 @@ describe('ParcelTimeline', () => {
   })
 
   it('displays location icons', () => {
-    const locationIcons = wrapper.findAll('svg').filter(svg => 
-      svg.find('path[fill-rule="evenodd"]').exists() && 
-      svg.find('path').attributes('d')?.includes('4.95-4.95')
-    )
+    const locationIcons = wrapper
+      .findAll('svg')
+      .filter(
+        svg =>
+          svg.find('path[fill-rule="evenodd"]').exists() &&
+          svg.find('path').attributes('d')?.includes('4.95-4.95')
+      )
     expect(locationIcons.length).toBeGreaterThan(0)
   })
 
@@ -126,13 +129,15 @@ describe('ParcelTimeline', () => {
       trackingNumber: 'SINGLE123',
       currentStatus: 'Order Placed',
       estimatedDelivery: '2024-01-20',
-      timeline: [{
-        status: 'Order Placed',
-        date: '2024-01-19',
-        time: '10:00 AM',
-        description: 'Order received',
-        location: 'Online'
-      }]
+      timeline: [
+        {
+          status: 'Order Placed',
+          date: '2024-01-19',
+          time: '10:00 AM',
+          description: 'Order received',
+          location: 'Online'
+        }
+      ]
     }
 
     await wrapper.setProps({ trackingData: singleItemData })
