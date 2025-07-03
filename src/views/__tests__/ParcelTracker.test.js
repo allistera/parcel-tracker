@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import ParcelTracker from '../ParcelTracker.vue'
 import TrackingInput from '../../components/TrackingInput.vue'
@@ -30,6 +30,18 @@ describe('ParcelTracker', () => {
         }
       }
     })
+
+    global.fetch = vi.fn(url => {
+      const trackingNumber = url.split('/').pop()
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(wrapper.vm.getMockTrackingData(trackingNumber))
+      })
+    })
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 
   it('renders correctly', () => {
@@ -159,6 +171,7 @@ describe('ParcelTracker', () => {
 
     // Simulate the event emission
     await trackingInput.vm.$emit('track-parcel', 'EVENT123')
+    await flushPromises()
 
     // The parent should handle the event and update trackingData
     expect(wrapper.vm.trackingData?.trackingNumber).toBe('EVENT123')
@@ -183,6 +196,7 @@ describe('ParcelTracker', () => {
     expect(wrapper.vm.initialTrackingNumber).toBe('INITIAL123')
 
     await wrapper.setProps({ id: 'UPDATED123' })
+    await flushPromises()
     expect(wrapper.vm.initialTrackingNumber).toBe('UPDATED123')
     expect(wrapper.vm.trackingData.trackingNumber).toBe('UPDATED123')
   })

@@ -45,7 +45,7 @@ export default {
       handler(newId) {
         if (newId) {
           this.initialTrackingNumber = newId
-          this.handleTrackParcel(newId)
+          return this.handleTrackParcel(newId)
         }
       }
     },
@@ -54,7 +54,7 @@ export default {
       handler(newId) {
         if (newId && newId !== this.initialTrackingNumber) {
           this.initialTrackingNumber = newId
-          this.handleTrackParcel(newId)
+          return this.handleTrackParcel(newId)
         } else if (!newId) {
           this.initialTrackingNumber = ''
           this.trackingData = null
@@ -63,17 +63,30 @@ export default {
     }
   },
   methods: {
-    handleTrackParcel(trackingNumber) {
+    async handleTrackParcel(trackingNumber) {
       // update the input value immediately so the route watcher
       // doesn't trigger another fetch when the URL changes
       this.initialTrackingNumber = trackingNumber
 
-      // fetch mock tracking data for the provided number
-      this.trackingData = this.getMockTrackingData(trackingNumber)
+      try {
+        // attempt to fetch tracking data from remote API
+        this.trackingData = await this.fetchTrackingData(trackingNumber)
+      } catch (err) {
+        console.error('Failed to fetch tracking data:', err)
+        // fallback to mock data if API request fails
+        this.trackingData = this.getMockTrackingData(trackingNumber)
+      }
 
       if (this.$route.params.id !== trackingNumber) {
         this.$router.push({ name: 'track', params: { id: trackingNumber } })
       }
+    },
+    async fetchTrackingData(trackingNumber) {
+      const response = await fetch(`https://api.example.com/parcels/${trackingNumber}`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      return response.json()
     },
     getMockTrackingData(trackingNumber) {
       const statuses = [
