@@ -82,7 +82,7 @@ export default {
       }
     },
     async fetchTrackingData(trackingNumber) {
-      const response = await fetch(`https://api.example.com/parcels/${trackingNumber}`)
+      const response = await fetch(`https://httpbin.org/get/${trackingNumber}`)
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
