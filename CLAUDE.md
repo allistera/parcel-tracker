@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Vue.js parcel tracking application with Flowbite styling and Tailwind CSS. The application allows users to lookup parcel status and view a timeline of status updates. It supports URL-based tracking where parcel IDs can be passed via URL parameters.
+This is a Vue.js parcel tracking application with Flowbite styling and Tailwind CSS. The application allows users to look up parcel status and view a timeline of status updates. It supports URL-based tracking where parcel IDs can be passed via URL parameters.
 
 ## Development Commands
 
@@ -35,7 +35,7 @@ npm test -- --run -t "should render correctly"
 ## Architecture
 
 ### Application Structure
-The app uses Vue 3 with Composition API and Vue Router for navigation. It follows a component-based architecture with clear separation between views and reusable components.
+The app uses Vue 3 with the Options API and Vue Router for navigation. It follows a component-based architecture with clear separation between views and reusable components.
 
 **Key Components:**
 - `App.vue` - Root layout with navigation and router-view
