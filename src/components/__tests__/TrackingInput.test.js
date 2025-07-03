@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import TrackingInput from '../TrackingInput.vue'
 
@@ -6,7 +6,12 @@ describe('TrackingInput', () => {
   let wrapper
 
   beforeEach(() => {
+    vi.useFakeTimers()
     wrapper = mount(TrackingInput)
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 
   it('renders correctly', () => {
@@ -76,8 +81,8 @@ describe('TrackingInput', () => {
     const form = wrapper.find('form')
     await form.trigger('submit.prevent')
 
-    // Wait for the async operation to complete
-    await new Promise(resolve => setTimeout(resolve, 1100))
+    vi.runAllTimers()
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.emitted('track-parcel')).toBeTruthy()
     expect(wrapper.emitted('track-parcel')[0]).toEqual(['ABC123'])
@@ -90,8 +95,8 @@ describe('TrackingInput', () => {
     const form = wrapper.find('form')
     await form.trigger('submit.prevent')
 
-    // Wait for the async operation to complete
-    await new Promise(resolve => setTimeout(resolve, 1100))
+    vi.runAllTimers()
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.emitted('track-parcel')[0]).toEqual(['ABC123'])
   })
