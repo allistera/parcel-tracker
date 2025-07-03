@@ -64,6 +64,11 @@ export default {
   },
   methods: {
     handleTrackParcel(trackingNumber) {
+      // update the input value immediately so the route watcher
+      // doesn't trigger another fetch when the URL changes
+      this.initialTrackingNumber = trackingNumber
+
+      // fetch mock tracking data for the provided number
       this.trackingData = this.getMockTrackingData(trackingNumber)
 
       if (this.$route.params.id !== trackingNumber) {
